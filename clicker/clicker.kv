@@ -1,0 +1,110 @@
+<MenuScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "image/bg/bg_menu.png"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(30)
+
+        Button:
+            text: "Играть"
+            font_size: "24sp"
+            size_hint: None, None
+            size: dp(200), dp(65)
+            pos_hint: {"center_x": 0.5}
+            background_normal: "image/button/button_play.png"
+            background_down: "image/button/button_play.png"
+
+            on_press:
+                root.start_game()
+                
+
+<GameScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "image/bg/bg_game.png"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(30)
+
+        Label:
+            text: f"Lvl {root.level}"
+            font_size: "30sp"
+            bold: True
+
+        Label: 
+            id: counter
+            text: f"{root.clicks}/{root.level_targets[root.level]}"
+            font_size: "24sp"
+
+        FloatLayout:        
+            Stone:    
+                hp: 10
+                id: stone
+                background_normal: f"image/stone/stone_{root.level}.png"
+                background_down: f"image/stone/stone_{root.level}.png"
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        Label:
+            text: "Нажимай на камень!"
+            font_size: "18sp"
+
+        Button:
+            text: "В меню"
+            size_hint: None, None
+            size: dp(140), dp(45)
+            pos_hint: {"center_x": 0.5}
+            background_normal: "image/button/button_menu.png"
+            background_down: "image/button/button_menu.png"
+            
+            on_press:
+                root.back_to_menu()
+
+
+<WinScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "image/bg/bg_win.png"
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(30)
+
+        Label:
+            text: "Поздравляем!"
+            font_size: "32sp"
+            bold: True
+
+        Label:
+            text: f"Вы достигли {root.final_level} уровня!"
+            font_size: "24sp"
+
+        Button:
+            text: "В меню"
+            size_hint: None, None
+            size: dp(140), dp(45)
+            pos_hint: {"center_x": 0.5}
+            background_normal: "image/button/button_menu.png"
+            background_down: "image/button/button_menu.png"
+            on_press: root.back_to_menu()
+
+
+<Stone>:
+    id: stone
+    text: ""
+    size_hint: None, None
+    size: dp(440), dp(320)
+
+    on_press:
+        root.click()
